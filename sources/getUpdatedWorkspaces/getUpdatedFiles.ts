@@ -9,30 +9,12 @@ export async function getUpdatedFiles({
   to: string;
   cwd?: string;
 }) {
-  const { stdout } = await execa(
-    'gh',
-    [
-      'pr',
-      'diff',
-      process.env.GITHUB_PR_ID,
-      '--name-only',
-      '--repo',
-      process.env.GITHUB_REPOSITORY,
-    ],
-    {
-      cwd,
-      shell: true,
-    },
-  );
+  const { stdout } = await execa('gh', ['pr', 'diff', process.env.GITHUB_PR_URL, '--name-only'], {
+    cwd,
+    shell: true,
+  });
 
-  console.log([
-    'pr',
-    'diff',
-    process.env.GITHUB_PR_ID,
-    '--name-only',
-    '--repo',
-    process.env.GITHUB_REPOSITORY,
-  ]);
+  console.log(['pr', 'diff', process.env.GITHUB_PR_ID, '--name-only']);
 
   return stdout.split(`\n`);
 }
