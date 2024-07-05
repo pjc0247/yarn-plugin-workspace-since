@@ -10,8 +10,8 @@ export async function getUpdatedFiles({
   cwd?: string;
 }) {
   const { stdout } = await execa(
-    'git',
-    ['-c', 'core.quotepath=false', 'diff', '--name-only', `${from}...${to}`],
+    'gh',
+    ['pr', 'diff', process.env.PR, '--name-only', '--repo', process.env.GITHUB_REPOSITORY],
     {
       cwd,
       shell: true,
